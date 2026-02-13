@@ -57,6 +57,19 @@
             display: flex;
         }
 
+        .center-slide {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            font-size: 60px;
+            animation: fade 1s ease-in-out;
+        }
+
+        .center-slide.active {
+            display: flex;
+        }
+
         .text {
             width: 50%;
             font-size: 22px;
@@ -155,7 +168,7 @@
     <div class="slide">
         <div class="text">
             <h2>My Peace 🌷</h2>
-            <p>You calm my heart like no one else can <3.</p>
+            <p>You calm my heart like no one else can &lt;3.</p>
         </div>
         <div class="image">
             <img src="pic4.jpeg">
@@ -173,27 +186,17 @@
         </div>
     </div>
 
-    <!-- Slide 6 -->
-    <div class="slide">
-        <div class="text">
-            <h2>Forever With You 💍</h2>
-            <p>I want every tomorrow with you.</p>
-        </div>
-        <div class="image">
-            <img src="pic6.jpeg">
-        </div>
-    </div>
-
-    <div style="text-align:center;">
-        <button onclick="nextSlide()">Next ❤️</button>
+    <!-- FINAL LOVE SLIDE (Hidden Initially) -->
+    <div class="center-slide" id="loveSlide">
+        ❤️ I Love You ❤️
     </div>
 
 </div>
 
-<!-- PROPOSAL -->
+<!-- PROPOSAL POPUP -->
 <div id="proposal">
     <h1>💍 Will You Be My Forever Valentine? ❤️</h1>
-    <button onclick="closeProposal()">Yes Always 💖</button>
+    <button onclick="showLoveSlide()">Yes Always 💖</button>
 </div>
 
 <!-- MUSIC -->
@@ -222,7 +225,7 @@ function checkPassword() {
 }
 
 function nextSlide() {
-    const slides = document.getElementsByClassName("slide");
+    const slides = document.querySelectorAll(".slide");
 
     slides[currentSlide].classList.remove("active");
     currentSlide++;
@@ -235,8 +238,16 @@ function nextSlide() {
     slides[currentSlide].classList.add("active");
 }
 
-function closeProposal() {
+document.addEventListener("click", function(e){
+    if(document.getElementById("slidesContainer").style.display === "block" &&
+       !document.getElementById("proposal").contains(e.target)) {
+        nextSlide();
+    }
+});
+
+function showLoveSlide() {
     document.getElementById("proposal").style.display = "none";
+    document.getElementById("loveSlide").classList.add("active");
 }
 
 function createHearts() {
@@ -254,5 +265,3 @@ function createHearts() {
 
 </body>
 </html>
-
-
