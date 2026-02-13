@@ -144,7 +144,7 @@
     <div class="slide">
         <div class="text">
             <h2>Your Smile 💕</h2>
-            <p>Your smile makes me forget what I was saying... Every single time.</p>
+            <p>Your smile makes me forget what I was saying every single time.</p>
         </div>
         <div class="image">
             <img src="pic2.jpeg">
@@ -164,7 +164,7 @@
     <div class="slide">
         <div class="text">
             <h2>My Peace 🌷</h2>
-            <p>You calm my heart like no one else can &lt;3.</p>
+            <p>You calm my heart like no one else can &lt;3</p>
         </div>
         <div class="image">
             <img src="pic4.jpeg">
@@ -187,51 +187,48 @@
 
 </div>
 
-<!-- PROPOSAL POPUP -->
+<!-- PROPOSAL -->
 <div id="proposal">
     <h1>💍 Will You Be My Forever Valentine? ❤️</h1>
     <button onclick="showLoveSlide()">Yes Always 💖</button>
 </div>
 
 <!-- MUSIC -->
-<audio id="bgMusic" loop preload="auto" playsinline>
-    <source src="samjhawan.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop>
+    <source src="samjhawan.mp3.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 let currentSlide = 0;
-let musicStarted = false;
 
 function checkPassword() {
     const password = document.getElementById("passwordInput").value;
 
     if(password === "iloveyou") {
+
         document.getElementById("passwordPage").style.display = "none";
         document.getElementById("slidesContainer").style.display = "block";
 
-        startMusic();
+        const music = document.getElementById("bgMusic");
+
+        music.pause();
+        music.currentTime = 0;
+
+        // FORCE PLAY
+        music.play();
+
+        // Fallback for strict browsers
+        document.body.addEventListener("click", function playAgain() {
+            music.play();
+            document.body.removeEventListener("click", playAgain);
+        });
+
         createHearts();
+
     } else {
         document.getElementById("error").innerText = "Wrong Password 😢";
     }
-}
-
-function startMusic() {
-    const music = document.getElementById("bgMusic");
-    music.volume = 0;
-    music.play().then(() => {
-        musicStarted = true;
-        let fade = setInterval(() => {
-            if (music.volume < 0.7) {
-                music.volume += 0.05;
-            } else {
-                clearInterval(fade);
-            }
-        }, 200);
-    }).catch(() => {
-        console.log("Autoplay blocked");
-    });
 }
 
 function nextSlide() {
