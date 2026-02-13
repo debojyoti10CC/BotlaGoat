@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For My Poopiee ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 20vh;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ff1e4d;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #ff4d6d;
+        }
+
+        .container {
+            display: none;
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .slide {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 70vh;
+            animation: fade 0.8s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .text {
+            width: 50%;
+            font-size: 22px;
+        }
+
+        .image {
+            width: 45%;
+        }
+
+        .image img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        @keyframes fade {
+            from {opacity: 0; transform: translateX(40px);}
+            to {opacity: 1; transform: translateX(0);}
+        }
+
+        #proposal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            from {transform: translateY(0); opacity:1;}
+            to {transform: translateY(-100vh); opacity:0;}
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- PASSWORD PAGE -->
+<div id="passwordPage" class="center">
+    <h2>Enter Password to Open My Heart ❤️</h2>
+    <input type="password" id="passwordInput">
+    <br>
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="error"></p>
+</div>
+
+<!-- SLIDES -->
+<div class="container" id="slidesContainer">
+
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <div class="text">
+            <h2>My Love ❤️</h2>
+            <p>You are the best thing that ever happened to me.</p>
+        </div>
+        <div class="image">
+            <img src="pic1.jpg">
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="text">
+            <h2>Your Smile 💕</h2>
+            <p>Your smile makes my world brighter.</p>
+        </div>
+        <div class="image">
+            <img src="pic2.jpg">
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="text">
+            <h2>Our Memories 🌸</h2>
+            <p>Every moment with you feels magical.</p>
+        </div>
+        <div class="image">
+            <img src="pic3.jpg">
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="text">
+            <h2>My Peace 🌷</h2>
+            <p>You calm my heart like no one else can.</p>
+        </div>
+        <div class="image">
+            <img src="pic4.jpg">
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="text">
+            <h2>My Happiness 💞</h2>
+            <p>You are my sunshine even on dark days.</p>
+        </div>
+        <div class="image">
+            <img src="pic5.jpg">
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="text">
+            <h2>Forever With You 💍</h2>
+            <p>I want every tomorrow with you.</p>
+        </div>
+        <div class="image">
+            <img src="pic6.jpg">
+        </div>
+    </div>
+
+    <div style="text-align:center;">
+        <button onclick="nextSlide()">Next ❤️</button>
+    </div>
+
+</div>
+
+<!-- PROPOSAL -->
+<div id="proposal">
+    <h1>💍 Will You Be My Forever Valentine? ❤️</h1>
+    <button onclick="closeProposal()">Yes Always 💖</button>
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="samjhawan.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let currentSlide = 0;
+
+function checkPassword() {
+    const password = document.getElementById("passwordInput").value;
+
+    if(password === "iloveyou") {
+        document.getElementById("passwordPage").style.display = "none";
+        document.getElementById("slidesContainer").style.display = "block";
+
+        let music = document.getElementById("bgMusic");
+        music.play().catch(()=>{});
+
+        createHearts();
+    } else {
+        document.getElementById("error").innerText = "Wrong Password 😢";
+    }
+}
+
+function nextSlide() {
+    const slides = document.getElementsByClassName("slide");
+
+    slides[currentSlide].classList.remove("active");
+    currentSlide++;
+
+    if(currentSlide >= slides.length) {
+        document.getElementById("proposal").style.display = "flex";
+        return;
+    }
+
+    slides[currentSlide].classList.add("active");
+}
+
+function closeProposal() {
+    document.getElementById("proposal").style.display = "none";
+}
+
+function createHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 400);
+}
+
+</script>
+
+</body>
+</html>
