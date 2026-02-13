@@ -45,6 +45,15 @@
             padding: 40px;
         }
 
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #ff1e4d;
+            font-weight: bold;
+        }
+
         .slide {
             display: none;
             align-items: center;
@@ -131,6 +140,9 @@
 <!-- SLIDES -->
 <div class="container" id="slidesContainer">
 
+    <!-- Music Button -->
+    <button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+
     <div class="slide active">
         <div class="text">
             <h2>My Love ❤️</h2>
@@ -194,46 +206,42 @@
 </div>
 
 <!-- MUSIC -->
-<audio id="bgMusic" loop>
-    <source src="samjhawan.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" loop src="samjhawan.mp3"></audio>
 
 <script>
 
 let currentSlide = 0;
+let isPlaying = false;
 
 function checkPassword() {
     const password = document.getElementById("passwordInput").value;
 
     if(password === "iloveyou") {
-
         document.getElementById("passwordPage").style.display = "none";
         document.getElementById("slidesContainer").style.display = "block";
-
-        const music = document.getElementById("bgMusic");
-
-        music.pause();
-        music.currentTime = 0;
-
-        // FORCE PLAY
-        music.play();
-
-        // Fallback for strict browsers
-        document.body.addEventListener("click", function playAgain() {
-            music.play();
-            document.body.removeEventListener("click", playAgain);
-        });
-
         createHearts();
-
     } else {
         document.getElementById("error").innerText = "Wrong Password 😢";
     }
 }
 
+function toggleMusic() {
+    const music = document.getElementById("bgMusic");
+    const btn = document.querySelector(".music-btn");
+
+    if (!isPlaying) {
+        music.play();
+        btn.innerText = "⏸ Pause Music";
+        isPlaying = true;
+    } else {
+        music.pause();
+        btn.innerText = "🎵 Play Music";
+        isPlaying = false;
+    }
+}
+
 function nextSlide() {
     const slides = document.querySelectorAll(".slide");
-
     slides[currentSlide].classList.remove("active");
     currentSlide++;
 
@@ -247,7 +255,8 @@ function nextSlide() {
 
 document.addEventListener("click", function(e){
     if(document.getElementById("slidesContainer").style.display === "block" &&
-       !document.getElementById("proposal").contains(e.target)) {
+       !document.getElementById("proposal").contains(e.target) &&
+       !e.target.classList.contains("music-btn")) {
         nextSlide();
     }
 });
@@ -272,6 +281,5 @@ function createHearts() {
 
 </body>
 </html>
-
 
 
